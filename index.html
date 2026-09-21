@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="de" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,62 +7,174 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@300;400&family=Inter:wght@400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
 
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
+            darkMode: 'class',
             theme: {
                 extend: {
                     fontFamily: {
-                        mono: ['"Geist Mono"', 'ui-monospace', 'SFMono-Regular', 'Roboto Mono', 'Menlo', 'monospace'],
-                        sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
+                        sans: ['Inter', 'system-ui', '-apple-system', 'Segoe UI', 'sans-serif'],
+                        mono: ['"JetBrains Mono"', 'ui-monospace', 'SFMono-Regular', 'Menlo', 'monospace'],
                     },
-                    colors: {
-                        canvas: '#f5f4f0',
-                        ink: '#1f2228',
+                    animation: {
+                        'fade-up': 'fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+                        'fade-in': 'fadeIn 0.6s ease-out forwards',
                     },
-                    letterSpacing: {
-                        'button': '1.4px',
-                        'tag': '1px',
-                    }
+                    keyframes: {
+                        fadeUp: {
+                            '0%': { opacity: '0', transform: 'translateY(12px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        },
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' },
+                        },
+                    },
                 }
             }
         }
     </script>
+
+    <!-- Prevent flash of wrong theme -->
+    <script>
+        (function() {
+            const stored = localStorage.getItem('theme');
+            if (stored === 'dark' || (!stored && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                document.documentElement.classList.add('dark');
+            }
+        })();
+    </script>
 </head>
 
-<body class="min-h-screen bg-canvas text-ink font-sans antialiased">
+<body class="min-h-screen bg-slate-50 dark:bg-slate-950 font-sans antialiased text-slate-900 dark:text-white transition-colors duration-300">
 
-    <!-- NAV -->
-    <header class="border-b border-ink/10">
-        <nav class="max-w-[1200px] mx-auto px-6 h-16 flex items-center justify-between">
-            <a href="/" class="font-mono text-sm uppercase tracking-tag text-ink hover:text-ink/50 transition-colors duration-200">
+    <!-- ============ NAVIGATION ============ -->
+    <nav class="sticky top-0 z-40 w-full border-b border-slate-200 bg-white/80 backdrop-blur-md dark:border-slate-800 dark:bg-slate-950/80 transition-colors duration-300">
+        <div class="mx-auto flex h-16 max-w-6xl items-center justify-between px-6">
+
+            <!-- Brand -->
+            <a href="/" class="group inline-flex items-center gap-2.5 text-sm font-semibold tracking-tight text-slate-900 dark:text-white">
+                <span class="relative flex h-2 w-2">
+                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-500 opacity-60"></span>
+                    <span class="relative inline-flex h-2 w-2 rounded-full bg-blue-600"></span>
+                </span>
                 OpenWarnMap
             </a>
-            <a href="https://github.com/openwarnmap" target="_blank" rel="noopener"
-               class="bg-ink text-canvas font-mono text-[13px] uppercase tracking-button px-5 py-2.5 hover:bg-ink/90 transition-colors duration-200">
-                GitHub
-            </a>
-        </nav>
-    </header>
 
-    <!-- HERO -->
-    <main class="max-w-[1200px] mx-auto px-6 min-h-[calc(100vh-8rem)] flex flex-col justify-center">
+            <!-- Right side -->
+            <div class="flex items-center gap-2">
 
-        <div class="max-w-[900px]">
-            <h1 class="font-mono font-light leading-[0.95] tracking-tight text-ink text-[64px] sm:text-[104px] md:text-[152px] lg:text-[200px]">
-                Coming<br>Soon.
+                <!-- GitHub -->
+                <a href="https://github.com/openwarnmap" target="_blank" rel="noopener"
+                   title="Auf GitHub ansehen"
+                   class="hidden sm:inline-flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium text-slate-600 transition-all duration-200 hover:bg-slate-100 hover:text-slate-900 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-white">
+                    <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <path fill-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clip-rule="evenodd"/>
+                    </svg>
+                    <span class="hidden md:inline">GitHub</span>
+                </a>
+
+                <!-- Dark Mode Toggle -->
+                <button
+                    id="theme-toggle"
+                    type="button"
+                    title="Dark Mode umschalten"
+                    aria-label="Dark Mode umschalten"
+                    class="inline-flex h-9 w-9 items-center justify-center rounded-lg text-slate-600 transition-all duration-200 hover:bg-slate-100 hover:text-slate-900 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-white"
+                >
+                    <!-- Sun -->
+                    <svg class="hidden h-4 w-4 dark:block" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+                        <circle cx="12" cy="12" r="4"/>
+                        <path stroke-linecap="round" d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/>
+                    </svg>
+                    <!-- Moon -->
+                    <svg class="h-4 w-4 dark:hidden" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ============ MAIN ============ -->
+    <main class="mx-auto flex min-h-[calc(100vh-4rem)] max-w-6xl items-center px-6 py-16">
+
+        <div class="w-full">
+
+            <!-- Badge -->
+            <div class="animate-fade-in opacity-0" style="animation-delay: 100ms;">
+                <span class="inline-flex items-center gap-2 rounded-md bg-blue-50 px-2.5 py-1 text-xs font-medium uppercase tracking-wider text-blue-700 dark:bg-blue-950/50 dark:text-blue-300">
+                    <span class="relative flex h-1.5 w-1.5">
+                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-500 opacity-60"></span>
+                        <span class="relative inline-flex h-1.5 w-1.5 rounded-full bg-blue-600"></span>
+                    </span>
+                    In Development
+                </span>
+            </div>
+
+            <!-- Headline -->
+            <h1 class="mt-8 animate-fade-up opacity-0 font-sans text-5xl font-semibold leading-[1.05] tracking-tight text-slate-900 sm:text-6xl md:text-7xl lg:text-8xl dark:text-white"
+                style="animation-delay: 200ms;">
+                Coming
+                <span class="block bg-gradient-to-r from-slate-900 to-slate-500 bg-clip-text text-transparent dark:from-white dark:to-slate-500">
+                    Soon.
+                </span>
             </h1>
 
-            <div class="mt-12 h-px w-full bg-ink/10"></div>
-
-            <p class="mt-6 font-mono text-[11px] uppercase tracking-tag text-ink/50">
-                OpenWarnMap — In Development
+            <!-- Subtitle -->
+            <p class="mt-8 max-w-xl animate-fade-up opacity-0 text-lg leading-relaxed text-slate-600 dark:text-slate-400"
+               style="animation-delay: 350ms;">
+                Eine offene Plattform für Warnmeldungen und Live-Karten.
+                Aktuell in Entwicklung — mehr Informationen folgen in Kürze.
             </p>
-        </div>
 
+            <!-- Buttons -->
+            <div class="mt-10 flex flex-wrap items-center gap-3 animate-fade-up opacity-0" style="animation-delay: 500ms;">
+
+                <!-- Primary -->
+                <a href="https://github.com/openwarnmap" target="_blank" rel="noopener"
+                   class="inline-flex items-center justify-center gap-2 rounded-lg bg-blue-600 px-5 py-2.5 text-sm font-medium text-white shadow-sm transition-all duration-200 ease-out hover:-translate-y-px hover:bg-blue-700 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500/40 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-slate-950 active:translate-y-0 active:shadow-sm">
+                    <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <path fill-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clip-rule="evenodd"/>
+                    </svg>
+                    Repository ansehen
+                </a>
+
+                <!-- Secondary -->
+                <a href="mailto:hello@openwarnmap.dev"
+                   class="inline-flex items-center justify-center gap-2 rounded-lg border border-slate-300 bg-white px-5 py-2.5 text-sm font-medium text-slate-700 shadow-sm transition-all duration-200 hover:border-slate-400 hover:bg-slate-50 hover:text-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500/40 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200 dark:hover:border-slate-600 dark:hover:bg-slate-800">
+                    Kontakt aufnehmen
+                </a>
+
+            </div>
+
+            <!-- Footer meta -->
+            <div class="mt-24 animate-fade-in opacity-0 border-t border-slate-200 pt-6 dark:border-slate-800" style="animation-delay: 700ms;">
+                <div class="flex flex-wrap items-center justify-between gap-4">
+                    <span class="font-mono text-xs font-medium uppercase tracking-wider text-slate-400 dark:text-slate-500">
+                        © 2025 OpenWarnMap
+                    </span>
+                    <span class="font-mono text-xs font-medium uppercase tracking-wider text-slate-400 dark:text-slate-500">
+                        All in Development
+                    </span>
+                </div>
+            </div>
+
+        </div>
     </main>
+
+    <!-- ============ SCRIPT ============ -->
+    <script>
+        // Theme Toggle
+        const toggle = document.getElementById('theme-toggle');
+        toggle.addEventListener('click', () => {
+            const isDark = document.documentElement.classList.toggle('dark');
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
+        });
+    </script>
 
 </body>
 </html>
