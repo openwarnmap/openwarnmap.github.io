@@ -3,10 +3,66 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Meine Organisation</title>
+    <title>OpenWarnMap — Coming Soon</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@300;400&family=Inter:wght@400&display=swap" rel="stylesheet">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        mono: ['"Geist Mono"', 'ui-monospace', 'SFMono-Regular', 'Roboto Mono', 'Menlo', 'monospace'],
+                        sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
+                    },
+                    colors: {
+                        canvas: '#f5f4f0',
+                        ink: '#1f2228',
+                    },
+                    letterSpacing: {
+                        'button': '1.4px',
+                        'tag': '1px',
+                    }
+                }
+            }
+        }
+    </script>
 </head>
-<body>
-    <h1>Willkommen!</h1>
-    <p>Das ist unsere Website.</p>
+
+<body class="min-h-screen bg-canvas text-ink font-sans antialiased">
+
+    <!-- NAV -->
+    <header class="border-b border-ink/10">
+        <nav class="max-w-[1200px] mx-auto px-6 h-16 flex items-center justify-between">
+            <a href="/" class="font-mono text-sm uppercase tracking-tag text-ink hover:text-ink/50 transition-colors duration-200">
+                OpenWarnMap
+            </a>
+            <a href="https://github.com/openwarnmap" target="_blank" rel="noopener"
+               class="bg-ink text-canvas font-mono text-[13px] uppercase tracking-button px-5 py-2.5 hover:bg-ink/90 transition-colors duration-200">
+                GitHub
+            </a>
+        </nav>
+    </header>
+
+    <!-- HERO -->
+    <main class="max-w-[1200px] mx-auto px-6 min-h-[calc(100vh-8rem)] flex flex-col justify-center">
+
+        <div class="max-w-[900px]">
+            <h1 class="font-mono font-light leading-[0.95] tracking-tight text-ink text-[64px] sm:text-[104px] md:text-[152px] lg:text-[200px]">
+                Coming<br>Soon.
+            </h1>
+
+            <div class="mt-12 h-px w-full bg-ink/10"></div>
+
+            <p class="mt-6 font-mono text-[11px] uppercase tracking-tag text-ink/50">
+                OpenWarnMap — In Development
+            </p>
+        </div>
+
+    </main>
+
 </body>
 </html>
